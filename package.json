@@ -2,7 +2,7 @@
   "name": "smiles-lang",
   "displayName": "SMILES Language Support",
   "description": "Complete language support for SMILES molecular notation with JavaScript DSL, syntax highlighting, live preview, and molecular structure visualization",
-  "version": "0.3.15",
+  "version": "0.3.16",
   "publisher": "ghost---shadow",
   "engines": {
     "vscode": "^1.85.0"
@@ -28,8 +28,8 @@
   "activationEvents": [
     "onLanguage:selfies",
     "onLanguage:javascript",
-    "onCommand:selfies.showMolecule",
-    "onCommand:selfies.togglePreview"
+    "onCommand:smiles.showMolecule",
+    "onCommand:smiles.togglePreview"
   ],
   "main": "./dist/extension.js",
   "contributes": {
@@ -59,53 +59,53 @@
     ],
     "commands": [
       {
-        "command": "selfies.showMolecule",
-        "title": "SELFIES: Show Molecular Structure",
+        "command": "smiles.showMolecule",
+        "title": "SMILES: Show Molecular Structure",
         "icon": "$(preview)"
       },
       {
-        "command": "selfies.togglePreview",
-        "title": "SELFIES: Toggle Preview Panel",
+        "command": "smiles.togglePreview",
+        "title": "SMILES: Toggle Preview Panel",
         "icon": {
           "light": "./icon.png",
           "dark": "./icon.png"
         }
       },
       {
-        "command": "selfies.refactorMolecule",
-        "title": "SELFIES: Refactor Molecule to Code"
+        "command": "smiles.refactorMolecule",
+        "title": "SMILES: Refactor Molecule to Code"
       }
     ],
     "menus": {
       "editor/title": [
         {
-          "command": "selfies.togglePreview",
+          "command": "smiles.togglePreview",
           "when": "resourceLangId == selfies || resourceFilename =~ /\\.smiles\\.js$/",
           "group": "navigation"
         }
       ],
       "editor/context": [
         {
-          "command": "selfies.refactorMolecule",
+          "command": "smiles.refactorMolecule",
           "when": "resourceFilename =~ /\\.smiles\\.js$/",
           "group": "1_modification"
         }
       ]
     },
     "configuration": {
-      "title": "SELFIES",
+      "title": "SMILES",
       "properties": {
-        "selfies.previewOnCursorMove": {
+        "smiles.previewOnCursorMove": {
           "type": "boolean",
           "default": true,
           "description": "Update preview when cursor moves to a different line"
         },
-        "selfies.autoOpenPreview": {
+        "smiles.autoOpenPreview": {
           "type": "boolean",
           "default": true,
           "description": "Automatically open preview panel when opening .selfies files"
         },
-        "selfies.renderingEngine": {
+        "smiles.renderingEngine": {
           "type": "string",
           "enum": [
             "smiles-drawer",

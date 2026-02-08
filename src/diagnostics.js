@@ -123,7 +123,7 @@ function getSeverity(type) {
  * @returns {vscode.Disposable}
  */
 function createDiagnosticsProvider() {
-  const diagnosticCollection = vscode.languages.createDiagnosticCollection('selfies');
+  const diagnosticCollection = vscode.languages.createDiagnosticCollection('smiles');
 
   // Helper function to check if file is supported
   const isSupportedFile = (document) => document.languageId === 'selfies'
@@ -155,7 +155,7 @@ function createDiagnosticsProvider() {
           `Validation error: ${err.message}`,
           vscode.DiagnosticSeverity.Warning,
         );
-        diagnostic.source = 'selfies';
+        diagnostic.source = 'smiles';
         diagnostics.push(diagnostic);
       }
 
@@ -188,7 +188,7 @@ function createDiagnosticsProvider() {
             severity,
           );
 
-          diagnostic.source = 'selfies';
+          diagnostic.source = 'smiles';
 
           // Add error code if available
           if (error.code) {
@@ -218,7 +218,7 @@ function createDiagnosticsProvider() {
             vscode.DiagnosticSeverity.Warning,
           );
 
-          diagnostic.source = 'selfies';
+          diagnostic.source = 'smiles';
           diagnostics.push(diagnostic);
         });
       }
@@ -229,7 +229,7 @@ function createDiagnosticsProvider() {
         `Failed to parse SELFIES file: ${err.message}`,
         vscode.DiagnosticSeverity.Error,
       );
-      diagnostic.source = 'selfies';
+      diagnostic.source = 'smiles';
       diagnostics.push(diagnostic);
     }
 

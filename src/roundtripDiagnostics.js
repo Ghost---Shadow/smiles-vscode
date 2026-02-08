@@ -74,8 +74,10 @@ function extractSMILESFromLine(line, lineNumber) {
 function createRoundTripDiagnostics(document) {
   const diagnostics = [];
 
-  // Only check JavaScript/TypeScript files and SELFIES files
-  if (!['javascript', 'typescript', 'selfies'].includes(document.languageId)) {
+  // Only check .smiles.js files and .selfies files
+  const isSmilesJS = document.fileName.endsWith('.smiles.js');
+  const isSelfies = document.languageId === 'selfies';
+  if (!isSmilesJS && !isSelfies) {
     return diagnostics;
   }
 
@@ -185,7 +187,10 @@ function createRoundTripDiagnosticsProvider() {
 
   // Register code action provider for quick fixes
   const codeActionProvider = vscode.languages.registerCodeActionsProvider(
-    ['javascript', 'typescript', 'selfies'],
+    [
+      { language: 'selfies' },
+      { language: 'javascript', pattern: '**/*.smiles.js' },
+    ],
     {
       provideCodeActions(document, range, context) {
         const codeActions = [];

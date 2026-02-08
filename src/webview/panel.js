@@ -21,8 +21,8 @@ class PreviewPanel {
      */
   _create() {
     this._panel = vscode.window.createWebviewPanel(
-      'selfiesPreview',
-      'SELFIES Preview',
+      'smilesPreview',
+      'SMILES Preview',
       vscode.ViewColumn.Beside,
       {
         enableScripts: true,

@@ -120,9 +120,9 @@ import [methyl, ethyl] from "./fragments.selfies"  # import specific
 
 ## Commands
 
-- `SELFIES: Show Molecular Structure` — Open the preview panel
-- `SELFIES: Toggle Preview Panel` — Toggle preview on/off
-- `SELFIES: Refactor Molecule to Code` — Convert a Fragment to constructor code (right-click menu in `.smiles.js` files)
+- `SMILES: Show Molecular Structure` — Open the preview panel
+- `SMILES: Toggle Preview Panel` — Toggle preview on/off
+- `SMILES: Refactor Molecule to Code` — Convert a Fragment to constructor code (right-click menu in `.smiles.js` files)
 
 ### Refactor to Code (Experimental)
 
@@ -130,7 +130,7 @@ import [methyl, ethyl] from "./fragments.selfies"  # import specific
   <img src="https://raw.githubusercontent.com/Ghost---Shadow/smiles-vscode/main/refactor-to-code.png" alt="Refactor to Code" width="600"/>
 </p>
 
-Right-click on any line with an exported Fragment in a `.smiles.js` file and select "SELFIES: Refactor Molecule to Code" to convert it into explicit Ring/Linear constructor calls.
+Right-click on any line with an exported Fragment in a `.smiles.js` file and select "SMILES: Refactor Molecule to Code" to convert it into explicit Ring/Linear constructor calls.
 
 > **Note:** This feature is early in development and often fails for complex molecular structures. It works best with simple fragments.
 
@@ -138,9 +138,9 @@ Right-click on any line with an exported Fragment in a `.smiles.js` file and sel
 
 | Setting | Default | Description |
 |---------|---------|-------------|
-| `selfies.previewOnCursorMove` | `true` | Update preview when cursor moves |
-| `selfies.autoOpenPreview` | `true` | Auto-open preview for `.selfies` and `.smiles.js` files |
-| `selfies.renderingEngine` | `smiles-drawer` | Molecule rendering engine |
+| `smiles.previewOnCursorMove` | `true` | Update preview when cursor moves |
+| `smiles.autoOpenPreview` | `true` | Auto-open preview for `.selfies` and `.smiles.js` files |
+| `smiles.renderingEngine` | `smiles-drawer` | Molecule rendering engine |
 
 ## Language Rules
 

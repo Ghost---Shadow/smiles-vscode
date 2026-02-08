@@ -7,13 +7,13 @@ import { initRDKit } from './rdkitRenderer';
 import { refactorMolecule } from './refactorMolecule';
 
 /**
- * Activate the SELFIES extension
+ * Activate the SMILES extension
  * @param {vscode.ExtensionContext} context
  */
 export function activate(context) {
   // Initialize RDKit asynchronously
   initRDKit().catch(() => {
-    vscode.window.showWarningMessage('SELFIES: RDKit initialization failed, using fallback renderer');
+    vscode.window.showWarningMessage('SMILES: RDKit initialization failed, using fallback renderer');
   });
 
   // Create diagnostics provider
@@ -40,7 +40,7 @@ export function activate(context) {
 
   // Register command to show molecular structure
   const showMoleculeCommand = vscode.commands.registerCommand(
-    'selfies.showMolecule',
+    'smiles.showMolecule',
     () => {
       const editor = vscode.window.activeTextEditor;
       if (!isSupportedFile(editor)) {
@@ -67,26 +67,26 @@ export function activate(context) {
 
   // Register command to toggle preview
   const togglePreviewCommand = vscode.commands.registerCommand(
-    'selfies.togglePreview',
+    'smiles.togglePreview',
     () => {
       if (previewPanel) {
         previewPanel.dispose();
         previewPanel = null;
       } else {
-        vscode.commands.executeCommand('selfies.showMolecule');
+        vscode.commands.executeCommand('smiles.showMolecule');
       }
     },
   );
 
   // Auto-open preview if enabled in settings
   const autoOpenPreview = () => {
-    const config = vscode.workspace.getConfiguration('selfies');
+    const config = vscode.workspace.getConfiguration('smiles');
     if (config.get('autoOpenPreview', true)) {
       const editor = vscode.window.activeTextEditor;
       if (isSupportedFile(editor)) {
         // Only auto-open if panel doesn't exist
         if (!previewPanel) {
-          vscode.commands.executeCommand('selfies.showMolecule');
+          vscode.commands.executeCommand('smiles.showMolecule');
         }
       }
     }
@@ -101,7 +101,7 @@ export function activate(context) {
 
   // Listen for cursor position changes
   const cursorChangeListener = lineTracker.onDidChangeCurrentLine((lineInfo) => {
-    const config = vscode.workspace.getConfiguration('selfies');
+    const config = vscode.workspace.getConfiguration('smiles');
     if (config.get('previewOnCursorMove', true) && previewPanel) {
       previewPanel.update(lineInfo);
     }
@@ -112,7 +112,7 @@ export function activate(context) {
 
   // Register refactor molecule command
   const refactorMoleculeCommand = vscode.commands.registerCommand(
-    'selfies.refactorMolecule',
+    'smiles.refactorMolecule',
     () => refactorMolecule(),
   );
 
