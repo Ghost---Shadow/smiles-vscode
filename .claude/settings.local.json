@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm:*)",
+      "Bash(ls:*)",
+      "Bash(node:*)",
+      "Bash(bun:*)",
+      "Bash(git:*)",
+      "Bash(node:*)",
+      "Bash(grep:*)",
+      "Bash(npx:*)",
+      "Bash(bunx:*)",
+      "Bash(ren:*)",
+      "Bash(dir:*)",
+      "Bash(timeout:*)",
+      "Bash(powershell -Command:*)",
+      "Bash(findstr:*)",
+      "Bash(del:*)",
+      "Bash(move:*)",
+      "Bash(gh run list:*)",
+      "Bash(echo:*)"
+    ]
+  }
+}
