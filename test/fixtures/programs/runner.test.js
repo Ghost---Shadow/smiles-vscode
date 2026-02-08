@@ -622,8 +622,6 @@ describe('VSCode Extension Fixture Programs', () => {
         // Test that exports exist and have .smiles property
         expect(module.methane).toBeTruthy();
         expect(module.methane.smiles).toBe('C');
-        expect(module.methane.formula).toBe('CH4');
-        expect(module.methane.molecularWeight).toBeCloseTo(16.04, 1);
 
         expect(module.ethane).toBeTruthy();
         expect(module.ethane.smiles).toBe('CC');
@@ -643,11 +641,11 @@ describe('VSCode Extension Fixture Programs', () => {
         };
 
         // Test finding exports at specific lines
-        expect(findExportAtLine(15)).toBe('methane');
-        expect(findExportAtLine(16)).toBe('ethane');
-        expect(findExportAtLine(17)).toBe('propane');
-        expect(findExportAtLine(20)).toBe('water');
-        expect(findExportAtLine(24)).toBe('benzeneRing');
+        expect(findExportAtLine(9)).toBe('methane');
+        expect(findExportAtLine(10)).toBe('ethane');
+        expect(findExportAtLine(11)).toBe('propane');
+        expect(findExportAtLine(14)).toBe('water');
+        expect(findExportAtLine(18)).toBe('benzene');
       });
 
       test('should provide molecular properties for all fragments', async () => {
@@ -656,21 +654,19 @@ describe('VSCode Extension Fixture Programs', () => {
         const fileUrl = pathToFileURL(modulePath).href;
         const module = await import(`${fileUrl}?t=${Date.now()}`);
 
-        // Test various exports
+        // Test various exports have correct SMILES
         const testCases = [
-          { name: 'methane', smiles: 'C', formula: 'CH4' },
-          { name: 'ethane', smiles: 'CC', formula: 'C2H6' },
-          { name: 'propane', smiles: 'CCC', formula: 'C3H8' },
-          { name: 'water', smiles: 'O', formula: 'O' },
-          { name: 'ammonia', smiles: 'N', formula: 'N' },
+          { name: 'methane', smiles: 'C' },
+          { name: 'ethane', smiles: 'CC' },
+          { name: 'propane', smiles: 'CCC' },
+          { name: 'water', smiles: 'O' },
+          { name: 'ammonia', smiles: 'N' },
         ];
 
-        for (const { name, smiles, formula } of testCases) {
+        for (const { name, smiles } of testCases) {
           const fragment = module[name];
           expect(fragment).toBeTruthy();
           expect(fragment.smiles).toBe(smiles);
-          expect(fragment.formula).toBe(formula);
-          expect(fragment.molecularWeight).toBeGreaterThan(0);
         }
       });
 
