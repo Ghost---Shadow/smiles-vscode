@@ -1,0 +1,4 @@
+# Base fragments for import testing
+[base_frag1] = [C][C]
+[base_frag2] = [C][C][C]
+[base_hydroxyl] = [O]

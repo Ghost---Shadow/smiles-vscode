@@ -1,0 +1,49 @@
+.vscode/**
+.vscode-test/**
+*.vsix
+.gitignore
+.eslintrc.json
+
+# Source files (we use bundled dist/ instead)
+src/**
+
+# All node_modules (bundled by esbuild)
+node_modules/**
+
+# Build tools
+esbuild.js
+build.js
+
+# Development files
+*.bat
+*.sh
+SETUP.md
+OVERVIEW.md
+convert-icon.js
+icon.svg
+
+# Build and test artifacts
+test/**
+*.test.js
+*.spec.js
+
+# Git and CI
+.git/**
+.github/**
+.gitattributes
+
+# Editor directories
+.idea/**
+.DS_Store
+
+# Temporary files
+*.log
+npm-debug.log*
+
+# Source maps
+*.map
+
+# Sharp (used only for icon conversion during build)
+node_modules/sharp/**
+node_modules/@img/**
+node_modules/detect-libc/**

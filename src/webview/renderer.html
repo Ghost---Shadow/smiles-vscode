@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline' https://unpkg.com; connect-src https:; img-src data: https: blob:;">
+    <title>SELFIES Preview</title>
+    <style>
+        body {
+            font-family: var(--vscode-font-family);
+            color: var(--vscode-foreground);
+            background-color: var(--vscode-editor-background);
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .header {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--vscode-panel-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header-left {
+            flex: 1;
+        }
+        .header-right {
+            display: flex;
+            gap: 8px;
+        }
+        .definition-name {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: var(--vscode-textLink-foreground);
+        }
+        .download-btn {
+            padding: 6px 12px;
+            background-color: var(--vscode-button-background);
+            color: var(--vscode-button-foreground);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+        .download-btn:hover {
+            background-color: var(--vscode-button-hoverBackground);
+        }
+        .expression {
+            font-family: 'Courier New', monospace;
+            color: var(--vscode-textPreformat-foreground);
+            margin-top: 5px;
+        }
+        .structure-container {
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid var(--vscode-panel-border);
+            border-radius: 4px;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #structure {
+            width: 500px;
+            height: 300px;
+            display: block;
+            border: 1px solid #ccc;
+        }
+        .properties {
+            margin-top: 20px;
+        }
+        .property {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: var(--vscode-editor-inactiveSelectionBackground);
+            border-radius: 4px;
+        }
+        .property-label {
+            font-weight: bold;
+            color: var(--vscode-symbolIcon-variableForeground);
+        }
+        .property-value {
+            margin-left: 10px;
+            font-family: 'Courier New', monospace;
+        }
+        .error {
+            color: var(--vscode-errorForeground);
+            padding: 10px;
+            background-color: var(--vscode-inputValidation-errorBackground);
+            border: 1px solid var(--vscode-inputValidation-errorBorder);
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .placeholder {
+            color: var(--vscode-descriptionForeground);
+            text-align: center;
+            padding: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="content">
+            <div class="placeholder">
+                Move your cursor to a definition to see the molecular structure
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/smiles-drawer@2.0.1/dist/smiles-drawer.min.js"></script>
+    <script>
+        const vscode = acquireVsCodeApi();
+        let smilesDrawer;
+
+        // Initialize smiles-drawer when available
+        function initSmilesDrawer() {
+            if (typeof SmilesDrawer !== 'undefined' && !smilesDrawer) {
+                try {
+                    smilesDrawer = new SmilesDrawer.SvgDrawer({
+                        width: 500,
+                        height: 300,
+                        bondThickness: 2,
+                        fontSizeLarge: 14,
+                        fontSizeSmall: 10
+                    });
+                    console.log('SmilesDrawer initialized successfully');
+                } catch (err) {
+                    console.error('Failed to initialize SmilesDrawer:', err);
+                }
+            }
+        }
+
+        window.addEventListener('load', initSmilesDrawer);
+
+        // Listen for messages from extension
+        window.addEventListener('message', event => {
+            const message = event.data;
+
+            if (message.command === 'update') {
+                updateView(message.data);
+            }
+        });
+
+        function updateView(lineInfo) {
+            const content = document.getElementById('content');
+
+            console.log('updateView called with:', lineInfo);
+
+            if (!lineInfo || lineInfo.error) {
+                content.innerHTML = `
+                    <div class="error">
+                        ${lineInfo?.error || 'No definition found on current line'}
+                    </div>
+                `;
+                return;
+            }
+
+            const { name, expression, selfies, smiles, molecularWeight, formula } = lineInfo;
+
+            console.log('SMILES to render:', smiles);
+
+            let html = `
+                <div class="header">
+                    <div class="header-left">
+                        <div class="definition-name">${name}</div>
+                        <div class="expression">${expression}</div>
+                    </div>
+                    <div class="header-right">
+                        <button class="download-btn" onclick="downloadSVG()">Download SVG</button>
+                        <button class="download-btn" onclick="downloadPNG()">Download PNG</button>
+                    </div>
+                </div>
+            `;
+
+            if (smiles) {
+                html += `
+                    <div class="structure-container" id="structure-wrapper">
+                        <svg id="structure" width="500" height="300"></svg>
+                    </div>
+                `;
+            } else {
+                html += `
+                    <div class="error">
+                        Invalid SELFIES: Could not convert to SMILES
+                    </div>
+                `;
+            }
+
+            html += '<div class="properties">';
+
+            if (selfies) {
+                html += `
+                    <div class="property">
+                        <span class="property-label">SELFIES:</span>
+                        <span class="property-value">${selfies}</span>
+                    </div>
+                `;
+            }
+
+            if (smiles) {
+                html += `
+                    <div class="property">
+                        <span class="property-label">SMILES:</span>
+                        <span class="property-value">${smiles}</span>
+                    </div>
+                `;
+            }
+
+            if (formula) {
+                html += `
+                    <div class="property">
+                        <span class="property-label">Formula:</span>
+                        <span class="property-value">${formula}</span>
+                    </div>
+                `;
+            }
+
+            if (molecularWeight !== null && molecularWeight !== undefined) {
+                html += `
+                    <div class="property">
+                        <span class="property-label">Molecular Weight:</span>
+                        <span class="property-value">${molecularWeight.toFixed(2)} g/mol</span>
+                    </div>
+                `;
+            }
+
+            html += '</div>';
+
+            content.innerHTML = html;
+
+            // Draw the structure after DOM update
+            if (smiles) {
+                // Wait for DOM to update
+                setTimeout(() => {
+                    // Ensure SmilesDrawer is initialized
+                    if (!smilesDrawer) {
+                        initSmilesDrawer();
+                    }
+
+                    if (smilesDrawer) {
+                        try {
+                            const svgElement = document.getElementById('structure');
+                            console.log('SVG element:', svgElement);
+                            console.log('SVG element dimensions:', svgElement?.getAttribute('width'), svgElement?.getAttribute('height'));
+                            if (svgElement) {
+                                console.log('Attempting to draw SMILES:', smiles);
+                                SmilesDrawer.parse(smiles, function(tree) {
+                                    console.log('Parse successful, drawing...');
+                                    smilesDrawer.draw(tree, 'structure', 'light', false);
+                                    console.log('Molecule drawn successfully');
+                                    console.log('SVG after draw:', document.getElementById('structure'));
+                                }, function(err) {
+                                    console.error('Error parsing SMILES:', err);
+                                    const wrapper = document.getElementById('structure-wrapper');
+                                    if (wrapper) {
+                                        wrapper.innerHTML = '<div class="error">Error rendering: ' + err + '</div>';
+                                    }
+                                    vscode.postMessage({
+                                        command: 'error',
+                                        text: 'Error drawing molecular structure: ' + err
+                                    });
+                                });
+                            } else {
+                                console.error('SVG element not found');
+                            }
+                        } catch (err) {
+                            console.error('Error drawing structure:', err);
+                        }
+                    } else {
+                        console.error('SmilesDrawer not available');
+                    }
+                }, 10);
+            }
+        }
+
+        // Download SVG function
+        function downloadSVG() {
+            const svgElement = document.getElementById('structure');
+            if (!svgElement) {
+                console.error('SVG element not found');
+                return;
+            }
+
+            // Get the SVG content
+            const svgData = new XMLSerializer().serializeToString(svgElement);
+            const moleculeName = document.querySelector('.definition-name')?.textContent || 'molecule';
+
+            // Send message to extension to save file
+            vscode.postMessage({
+                command: 'saveSVG',
+                svgData: svgData,
+                fileName: `${moleculeName}.svg`
+            });
+
+            console.log('SVG save requested');
+        }
+
+        // Download PNG function
+        function downloadPNG() {
+            const svgElement = document.getElementById('structure');
+            if (!svgElement) {
+                console.error('SVG element not found');
+                return;
+            }
+
+            // Get SVG dimensions
+            const width = parseInt(svgElement.getAttribute('width') || '500');
+            const height = parseInt(svgElement.getAttribute('height') || '300');
+
+            // Create a canvas
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+
+            // Fill white background
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, width, height);
+
+            // Convert SVG to data URL
+            const svgData = new XMLSerializer().serializeToString(svgElement);
+            const svgDataUrl = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+            const img = new Image();
+
+            img.onload = function() {
+                ctx.drawImage(img, 0, 0);
+
+                // Convert canvas to PNG data URL
+                const pngDataUrl = canvas.toDataURL('image/png');
+                const moleculeName = document.querySelector('.definition-name')?.textContent || 'molecule';
+
+                // Send message to extension to save file
+                vscode.postMessage({
+                    command: 'savePNG',
+                    pngData: pngDataUrl,
+                    fileName: `${moleculeName}.png`
+                });
+
+                console.log('PNG save requested');
+            };
+
+            img.onerror = function(err) {
+                console.error('Error converting SVG to PNG:', err);
+            };
+
+            img.src = svgDataUrl;
+        }
+    </script>
+</body>
+</html>

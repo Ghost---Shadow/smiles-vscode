@@ -1,0 +1,17 @@
+# Common molecular fragments for import testing
+# This file contains basic building blocks
+
+# Alkyl groups
+[methyl] = [C]
+[ethyl] = [C][C]
+[propyl] = [C][C][C]
+[butyl] = [C][C][C][C]
+
+# Functional groups
+[hydroxyl] = [O]
+[amino] = [N]
+[carbonyl] = [=O]
+[carboxyl] = [C][=Branch1][C][=O][O]
+
+# Rings (using branch notation)
+[phenyl] = [C][=C][C][=C][C][=C][Ring1][Branch1]

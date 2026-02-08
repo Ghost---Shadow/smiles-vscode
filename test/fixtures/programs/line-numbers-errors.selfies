@@ -1,0 +1,10 @@
+# Test file for error line numbers
+# Has intentional duplicate definitions
+
+[methyl] = [C]
+# Comment before duplicate
+[methyl] = [N]  # Duplicate on line 6
+
+[ethyl] = [C][C]
+# Another comment
+[ethyl] = [O]  # Duplicate on line 10

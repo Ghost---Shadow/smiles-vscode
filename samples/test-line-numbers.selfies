@@ -1,0 +1,21 @@
+# Test file for line number preservation
+# This file tests the fix for comments and imports causing line misalignment
+# Place your cursor on any definition below and the preview should show correctly
+
+# Basic fragments (no imports needed)
+[methyl] = [C]
+[ethyl] = [C][C]
+[propyl] = [C][C][C]
+
+# Functional groups
+[hydroxyl] = [O]
+[amino] = [N]
+[carbonyl] = [=O]
+
+# Test molecules - cursor should work on each of these lines
+[methanol] = [methyl][hydroxyl]
+[ethanol] = [ethyl][hydroxyl]
+[propanol] = [propyl][hydroxyl]
+
+# More complex
+[acetone] = [methyl][C][=Branch1][C][carbonyl][methyl]

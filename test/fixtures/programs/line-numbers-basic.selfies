@@ -1,0 +1,15 @@
+# Test file for line number accuracy
+# This file has comments at the top
+
+# Basic fragments
+[methyl] = [C]
+[ethyl] = [C][C]
+[propyl] = [C][C][C]
+
+# Functional groups
+[hydroxyl] = [O]
+[amino] = [N]
+
+# Simple molecules
+[methanol] = [methyl][hydroxyl]
+[ethanol] = [ethyl][hydroxyl]

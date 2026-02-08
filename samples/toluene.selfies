@@ -1,0 +1,17 @@
+# Simple definitions
+[methyl] = [C]
+[ethyl] = [C][C]
+[propyl] = [C][C][C]
+
+# Composition
+[hydroxyl] = [O]
+[ethanol] = [ethyl][hydroxyl]
+
+# More complex molecules
+[carbonyl] = [C][=O]
+[carboxyl] = [C][=Branch1][C][=O][O]
+[acetic_acid] = [methyl][carboxyl]
+
+# Rings
+[benzene] = [C][=C][C][=C][C][=C][Ring1][=Branch1]
+[toluene] = [methyl][benzene]

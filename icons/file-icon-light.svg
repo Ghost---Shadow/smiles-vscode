@@ -1,0 +1,25 @@
+<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+  <!-- Simplified molecule icon for light theme -->
+  <!-- Hexagonal ring -->
+  <g transform="translate(8, 8)">
+    <!-- Ring bonds -->
+    <line x1="0" y1="-3" x2="2.6" y2="-1.5" stroke="#2D5D8C" stroke-width="1.2"/>
+    <line x1="2.6" y1="-1.5" x2="2.6" y2="1.5" stroke="#2D5D8C" stroke-width="1.2"/>
+    <line x1="2.6" y1="1.5" x2="0" y2="3" stroke="#2D5D8C" stroke-width="1.2"/>
+    <line x1="0" y1="3" x2="-2.6" y2="1.5" stroke="#2D5D8C" stroke-width="1.2"/>
+    <line x1="-2.6" y1="1.5" x2="-2.6" y2="-1.5" stroke="#2D5D8C" stroke-width="1.2"/>
+    <line x1="-2.6" y1="-1.5" x2="0" y2="-3" stroke="#2D5D8C" stroke-width="1.2"/>
+
+    <!-- Atom nodes -->
+    <circle cx="0" cy="-3" r="1" fill="#4FC3F7"/>
+    <circle cx="2.6" cy="-1.5" r="1" fill="#4FC3F7"/>
+    <circle cx="2.6" cy="1.5" r="1" fill="#4FC3F7"/>
+    <circle cx="0" cy="3" r="1" fill="#4FC3F7"/>
+    <circle cx="-2.6" cy="1.5" r="1" fill="#4FC3F7"/>
+    <circle cx="-2.6" cy="-1.5" r="1" fill="#4FC3F7"/>
+
+    <!-- Side chain -->
+    <line x1="2.6" y1="-1.5" x2="4.5" y2="-2.5" stroke="#2D5D8C" stroke-width="1.2"/>
+    <circle cx="4.5" cy="-2.5" r="1" fill="#81C784"/>
+  </g>
+</svg>

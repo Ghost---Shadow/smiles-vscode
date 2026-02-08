@@ -1,0 +1,33 @@
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="64" cy="64" r="60" fill="#2D5D8C" stroke="#1A3A5C" stroke-width="2"/>
+
+  <!-- Hexagonal ring (benzene-like structure) -->
+  <g transform="translate(64, 64)">
+    <!-- Ring bonds -->
+    <line x1="0" y1="-25" x2="21.65" y2="-12.5" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+    <line x1="21.65" y1="-12.5" x2="21.65" y2="12.5" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+    <line x1="21.65" y1="12.5" x2="0" y2="25" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+    <line x1="0" y1="25" x2="-21.65" y2="12.5" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+    <line x1="-21.65" y1="12.5" x2="-21.65" y2="-12.5" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+    <line x1="-21.65" y1="-12.5" x2="0" y2="-25" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+
+    <!-- Atom nodes -->
+    <circle cx="0" cy="-25" r="6" fill="#4FC3F7" stroke="#FFFFFF" stroke-width="2"/>
+    <circle cx="21.65" cy="-12.5" r="6" fill="#4FC3F7" stroke="#FFFFFF" stroke-width="2"/>
+    <circle cx="21.65" cy="12.5" r="6" fill="#4FC3F7" stroke="#FFFFFF" stroke-width="2"/>
+    <circle cx="0" cy="25" r="6" fill="#4FC3F7" stroke="#FFFFFF" stroke-width="2"/>
+    <circle cx="-21.65" cy="12.5" r="6" fill="#4FC3F7" stroke="#FFFFFF" stroke-width="2"/>
+    <circle cx="-21.65" cy="-12.5" r="6" fill="#4FC3F7" stroke="#FFFFFF" stroke-width="2"/>
+
+    <!-- Side chain -->
+    <line x1="21.65" y1="-12.5" x2="38" y2="-20" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="38" cy="-20" r="6" fill="#81C784" stroke="#FFFFFF" stroke-width="2"/>
+  </g>
+
+  <!-- SELFIES text badge -->
+  <g transform="translate(64, 105)">
+    <rect x="-30" y="-8" width="60" height="16" rx="8" fill="#1A3A5C" opacity="0.9"/>
+    <text x="0" y="4" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#FFFFFF" text-anchor="middle">SELFIES</text>
+  </g>
+</svg>

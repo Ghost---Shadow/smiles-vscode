@@ -1,0 +1,12 @@
+# Test file with imports and comments
+# Testing that imports preserve line numbers
+
+import "./fragments-base.selfies"
+
+# After import, line numbers should still be accurate
+[compound1] = [base_frag1][O]
+# Comment between definitions
+[compound2] = [base_frag2][N]
+
+# More definitions
+[compound3] = [base_frag1][base_frag2]

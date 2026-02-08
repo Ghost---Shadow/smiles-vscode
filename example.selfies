@@ -1,0 +1,45 @@
+# SELFIES Language Example
+# This file demonstrates the SELFIES DSL syntax
+
+# Basic alkyl groups
+[methyl] = [C]
+[ethyl] = [C][C]
+[propyl] = [C][C][C]
+[butyl] = [C][C][C][C]
+
+# Functional groups
+[hydroxyl] = [O]
+[amino] = [N]
+[carbonyl] = [=O]
+[carboxyl] = [C][=Branch1][C][=O][O]
+
+# Simple molecules
+[methanol] = [methyl][hydroxyl]
+[ethanol] = [ethyl][hydroxyl]
+[propanol] = [propyl][hydroxyl]
+
+# Organic acids
+[formic_acid] = [carboxyl]
+[acetic_acid] = [methyl][carboxyl]
+[propionic_acid] = [ethyl][carboxyl]
+
+# Amines
+[methylamine] = [methyl][amino]
+[ethylamine] = [ethyl][amino]
+
+# More complex molecules
+[acetone] = [methyl][C][=Branch1][C][=O][methyl]
+[acetaldehyde] = [methyl][C][=O]
+
+# Aromatic compounds
+[benzene] = [C][=C][C][=C][C][=C][Ring1][=Branch1]
+[toluene] = [methyl][benzene]
+[phenol] = [benzene][hydroxyl]
+
+# Heterocycles
+[pyridine] = [C][=C][C][=C][N][=C][Ring1][=Branch1]
+[furan] = [O][C][=C][C][=C][Ring1][Branch1]
+
+# Amino acids (simplified)
+[glycine] = [amino][C][carboxyl]
+[alanine] = [amino][C][Branch1][C][methyl][carboxyl]

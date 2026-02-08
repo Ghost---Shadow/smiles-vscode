@@ -1,0 +1,152 @@
+{
+  "name": "smiles-lang",
+  "displayName": "SMILES Language Support",
+  "description": "Complete language support for SMILES molecular notation with JavaScript DSL, syntax highlighting, live preview, and molecular structure visualization",
+  "version": "0.3.13",
+  "publisher": "ghost---shadow",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Visualization",
+    "Other"
+  ],
+  "keywords": [
+    "selfies",
+    "chemistry",
+    "molecules",
+    "smiles",
+    "cheminformatics",
+    "molecular-design",
+    "drug-discovery",
+    "bioinformatics",
+    "molecular-structure",
+    "visualization"
+  ],
+  "icon": "icon.png",
+  "activationEvents": [
+    "onLanguage:selfies",
+    "onLanguage:javascript",
+    "onCommand:selfies.showMolecule",
+    "onCommand:selfies.togglePreview"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "selfies",
+        "aliases": [
+          "SELFIES",
+          "selfies"
+        ],
+        "extensions": [
+          ".selfies"
+        ],
+        "configuration": "./language-configuration.json",
+        "icon": {
+          "light": "./icons/file-icon-light.svg",
+          "dark": "./icons/file-icon-dark.svg"
+        }
+      }
+    ],
+    "grammars": [
+      {
+        "language": "selfies",
+        "scopeName": "source.selfies",
+        "path": "./syntaxes/selfies.tmLanguage.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "selfies.showMolecule",
+        "title": "SELFIES: Show Molecular Structure",
+        "icon": "$(preview)"
+      },
+      {
+        "command": "selfies.togglePreview",
+        "title": "SELFIES: Toggle Preview Panel",
+        "icon": {
+          "light": "./icon.png",
+          "dark": "./icon.png"
+        }
+      },
+      {
+        "command": "selfies.refactorMolecule",
+        "title": "SELFIES: Refactor Molecule to Code"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "selfies.togglePreview",
+          "when": "resourceLangId == selfies || resourceFilename =~ /\\.smiles\\.js$/",
+          "group": "navigation"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "selfies.refactorMolecule",
+          "when": "resourceFilename =~ /\\.smiles\\.js$/",
+          "group": "1_modification"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "SELFIES",
+      "properties": {
+        "selfies.previewOnCursorMove": {
+          "type": "boolean",
+          "default": true,
+          "description": "Update preview when cursor moves to a different line"
+        },
+        "selfies.autoOpenPreview": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically open preview panel when opening .selfies files"
+        },
+        "selfies.renderingEngine": {
+          "type": "string",
+          "enum": [
+            "smiles-drawer",
+            "rdkit"
+          ],
+          "default": "smiles-drawer",
+          "description": "Molecule rendering engine"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "node esbuild.js",
+    "package": "node esbuild.js --production",
+    "watch": "node esbuild.js --watch",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "test": "bun test"
+  },
+  "dependencies": {
+    "@rdkit/rdkit": "^2025.3.4-1.0.0",
+    "selfies-js": "^0.3.6",
+    "smiles-js": "^1.1.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.2",
+    "@types/vscode": "^1.85.0",
+    "@vscode/test-electron": "^2.3.8",
+    "esbuild": "^0.27.2",
+    "eslint": "^8.57.1",
+    "globals": "^17.0.0",
+    "sharp": "^0.34.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ghost---Shadow/smiles-vscode"
+  },
+  "bugs": {
+    "url": "https://github.com/Ghost---Shadow/smiles-vscode/issues"
+  },
+  "homepage": "https://github.com/Ghost---Shadow/smiles-vscode#readme",
+  "license": "MIT"
+}
