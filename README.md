@@ -12,16 +12,15 @@ Build molecules programmatically with JavaScript, compose them from reusable fra
 
 Raw SMILES strings are write-only — `CC(=O)Nc1ccc(O)cc1` tells you nothing at a glance. And when LLMs generate SMILES, they hallucinate invalid structures.
 
-smiles-js fixes both problems: composable Fragment and Ring constructors produce valid SMILES by construction, and the code reads like chemistry:
+smiles-js fixes both problems: composable Fragment constructors produce valid SMILES by construction, and the code reads like chemistry:
 
 ```javascript
 // molecules.smiles.js
-import { Fragment, Ring } from 'smiles-js';
-import { benzene, methyl, ethyl, hydroxyl } from 'smiles-js/common';
+import { Fragment } from 'smiles-js';
 
 export const methane = Fragment('C');
-export const ethanol = ethyl(hydroxyl);
-export const toluene = benzene(methyl);
+export const ethanol = Fragment('CCO');
+export const toluene = Fragment('Cc1ccccc1');
 ```
 
 This extension executes your JavaScript file and reads the `.smiles` property from exported fragments — no regex parsing! As your cursor moves, you see the 2D structure, formula, weight, and SMILES output.
@@ -43,12 +42,11 @@ Or search "SMILES" in the VS Code extensions panel.
 
 ```javascript
 // molecules.smiles.js
-import { Fragment, Ring } from 'smiles-js';
-import { benzene, methyl, ethyl, hydroxyl } from 'smiles-js/common';
+import { Fragment } from 'smiles-js';
 
 export const methane = Fragment('C');
-export const ethanol = ethyl(hydroxyl);
-export const toluene = benzene(methyl);
+export const ethanol = Fragment('CCO');
+export const toluene = Fragment('Cc1ccccc1');
 ```
 
 ### Using SELFIES DSL
