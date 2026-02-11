@@ -2,7 +2,7 @@
   "name": "smiles-lang",
   "displayName": "SMILES Language Support",
   "description": "Complete language support for SMILES molecular notation with JavaScript DSL, syntax highlighting, live preview, and molecular structure visualization",
-  "version": "0.3.17",
+  "version": "0.3.18",
   "publisher": "ghost---shadow",
   "engines": {
     "vscode": "^1.85.0"
@@ -129,7 +129,7 @@
   "dependencies": {
     "@rdkit/rdkit": "^2025.3.4-1.0.0",
     "selfies-js": "^0.3.6",
-    "smiles-js": "^2.0.1"
+    "smiles-js": "^2.0.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
